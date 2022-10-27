@@ -4,11 +4,51 @@
     <h2>Log In</h2>
     <label for="username">Username</label>
     <input type="text" name="username" required>
+    <div id="un"></div>
     <label for="email">Email</label>
     <input type="text" name="email" required />
+    <div id="em"></div>
     <label for="password">Password</label>
     <input type="password" name="password" required />
-    <button>Sign Up</button>
+    <div id="pass"></div>
+    <button>Log In</button>
 </form>
+
+<script>
+const form = document.querySelector('form');
+const usernameError = document.getElementById('un');
+const emailError = document.getElementById('em');
+const passwordError = document.getElementById('pass');
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const username = form.username.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    
+    try {
+          const res = await fetch('/login', {
+            method: 'POST',
+            body: JSON.stringify({ username, email, password }),
+            headers: { 'Content-Type': 'application/json' }
+          });
+          const data = await res.json();
+          console.log(data);
+          if (data.errors) {
+            usernameError.textContent = data.errors.username;
+            emailError.textContent = data.errors.email;
+            passwordError.textContent = data.errors.password;
+            console.log(usernameError.textContent);
+          }
+          if (data.user) {
+            location.assign('/');
+          }  
+        } catch (error) {
+            console.log(error);
+        }
+});
+
+</script>
 
 <%- include('partials/footer'); -%>
