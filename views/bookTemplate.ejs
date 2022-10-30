@@ -1,0 +1,19 @@
+<%- include('partials/header'); -%>
+
+<div>
+  <% if (book) { %>
+  <p><%= book.title %></p>
+  <ul>
+      <li><%= book.author %></li>
+      <li><img src="/images/<%= book.cover %>"></li>
+      <li>Genre: <%= book.genre[0] %></li>
+      <li>Rating: <%= book.rating %></li>
+      <li><%= book.desc %></li>
+  </ul>
+  
+  <%} else { %>
+  <p>No book found</p>
+  <% } %>
+</div>
+
+<%- include('partials/footer'); -%>

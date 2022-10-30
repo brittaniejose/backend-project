@@ -1,0 +1,20 @@
+<%- include('partials/header'); -%>
+
+<div>
+  <% if (books) { %>
+    <ul>
+        <% books.forEach(function(book){ %>
+      <li><%= book.title %></li>
+      <li><%= book.author %></li>
+      <li><img src="/images/<%= book.cover %>"></li>
+      <li>Genre: <%= book.genre[0] %></li>
+      <li>Rating: <%= book.rating %></li>
+      <li>Description: <%= book.desc %></li>
+    <% }); %>
+  </ul>
+  <%} else { %> 
+  <p>No books found</p>
+  <% } %>
+</div>
+
+<%- include('partials/footer'); -%>

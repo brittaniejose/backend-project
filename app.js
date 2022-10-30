@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 var indexRouter = require('./routes/index');
 var genRoutes = require('./routes/genRoutes');
 
+
 // env variable
 require('dotenv').config()
 

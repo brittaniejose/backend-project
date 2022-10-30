@@ -44,3 +44,11 @@ nav li {
 #searchBtn {
   margin-left: 10px;
 }
+
+#bks {
+  margin: 20px 20px 20px 0px;
+}
+
+#tr {
+  display: flex
+}
