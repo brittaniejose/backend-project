@@ -9,7 +9,7 @@
       <li><img src="/images/<%= book.cover %>"></li>
       <li>Genre: <%= book.genre[0] %></li>
       <li>Rating: <%= book.rating %></li>
-      <li>Description: <%= book.desc %></li>
+      <li><a href="/genre/<%= book.genre[0] %>/<%= book._id %>">More Info</a></li>
     <% }); %>
   </ul>
   <%} else { %> 

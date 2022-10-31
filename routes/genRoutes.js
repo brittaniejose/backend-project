@@ -10,10 +10,11 @@ router.post('/login', controller.login_post);
 router.get('/genre/:genre/:bookID', bksController.book_get);
 router.get('/genre/:genre', bksController.genre_get);
 router.get('/search', bksController.search_get);
-// router.get('/add-book', controller.ab_get);
-// router.post('/add-book', controller.ab_post);
-// router.get('/bookclub-schedule', controller.bcs_get);
+router.get('/add-review/:bookID', bksController.add_review_get);
+router.post('/add-review', bksController.add_review_post);
+// router.get('/logout', controller.logout_get); 
 // router.get('/favorites', controller.favorites_get);
-// router.get('/join-club', controller.join_get);
+router.get('/join-club', bksController.join_club_get);
+router.post('/join-club', bksController.join_club_post);
 
 module.exports = router;

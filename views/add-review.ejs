@@ -2,23 +2,20 @@
 
 <div>
   <% if (book) { %>
+    <h3>Add Review</h3>
   <p><%= book.title %></p>
   <ul>
       <li><%= book.author %></li>
       <li><img src="/images/<%= book.cover %>"></li>
       <li>Genre: <%= book.genre[0] %></li>
       <li>Rating: <%= book.rating %></li>
-      <li>Description: <%= book.desc %></li>
   </ul>
-  <p>Reviews</p>
-  <% if (reviews) { %>
-  <ul>
-    <% reviews.forEach(function(review) { %> 
-    <li><%= book.review %></li>
-    <%}); %>
-  </ul>
-  <% } %>
-  <span class="button is-link is-rounded"><a href="/add-review/<%= book._id %>">Add Review</a></span>
+
+  <form id="addRev" action="/add-review" method="post">
+    <label>Tell us what you thought!</label>
+    <textarea name="addrev" type="text" class="textarea is-medium is-focused" placeholder="Write your review here" rows="10"></textarea>
+    <button type="submit" id="reviewBtn" class="button is-link is-rounded">Submit Review</button>
+  </form>
   
   <%} else { %>
   <p>No book found</p>

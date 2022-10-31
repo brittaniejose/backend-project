@@ -1,0 +1,52 @@
+<%- include('partials/header'); -%>
+
+<form>
+    <h2>Join Our Book Club!</h2>
+    <label for="dusername">Discord Username</label>
+    <input type="text" name="dusername" required>
+    <div id="dUser"></div>
+    <label for="dID">Discord ID</label>
+    <input type="text" name="discordID" required />
+    <div id="dID"></div>
+    <label>Book Suggestions</label>
+    <textarea name="bkSuggestions" type="text" class="textarea is-medium is-focused" placeholder="Give us any book suggestions here (optional)" rows="10"></textarea>
+    <div id="bkSuggs"></div>
+    <button type="submit" id="joinSubmit" class="button is-link is-rounded">Join</button>
+</form>
+
+<script>
+const form = document.querySelector('form');
+const usernameError = document.getElementById('un');
+const emailError = document.getElementById('em');
+const passwordError = document.getElementById('pass');
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = form.username.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    
+    try {
+          const res = await fetch('/login', {
+            method: 'POST',
+            body: JSON.stringify({ username, email, password }),
+            headers: { 'Content-Type': 'application/json' }
+          });
+          const data = await res.json();
+          console.log(data);
+          if (data.errors) {
+            usernameError.textContent = data.errors.username;
+            emailError.textContent = data.errors.email;
+            passwordError.textContent = data.errors.password;
+            console.log(usernameError.textContent);
+          }
+          if (data.user) {
+            location.assign('/');
+          }  
+        } catch (error) {
+            console.log(error);
+        }
+});
+</script>
+
+<%- include('partials/footer'); -%>

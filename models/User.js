@@ -24,9 +24,11 @@ const userSchema = new Schema ({
         type: String,
         required: [true, "Please enter your password"],
         minlength: [6, "Minimum password length is 6 characters"]
-    }
+    },
+    reviews: [{ type: Schema.Types.ObjectId, ref: 'Review'}]
 });
 
 const User = mongoose.model('user', userSchema);
+
 
 module.exports = User;

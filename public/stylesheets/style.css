@@ -3,10 +3,6 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
-}
-
 #siteName {
   font-family: 'Rockwell';
   font-size: 40px;
@@ -51,4 +47,8 @@ nav li {
 
 #tr {
   display: flex
+}
+
+a {
+  color: inherit;
 }
