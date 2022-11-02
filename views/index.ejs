@@ -3,7 +3,7 @@
 <div>
 
   <p>Welcome to <%= title %>!</p>
-  <h2>Add your favorite book, Find your next page turner here.</h2>
+  <h2>Find your next page turner here.</h2>
 
   <form id="search" action="/search" method="GET">
     <input name="search" type="text" class="input is-medium is-focused is-rounded" placeholder="Search title or author">
@@ -14,7 +14,7 @@
 
 <div class="notification is-primary" id="bks">
   <p>Come read with us on Wednesdays! Join our bookclub to receive access to our discord server.</p>
-  <button>Join Club</button>
+  <span class="button is-light is-link is-rounded"><a href="/join-club">Join Club</a></span>
   <div>
     <h3>Book Schedule</h3>
     <ul>

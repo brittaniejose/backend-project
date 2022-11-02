@@ -13,9 +13,13 @@
         <h1 id="siteName"><a href="/">ReadIt</a></h1>
         <div class="uldiv">
             <ul>
-            <li>Welcome User</li>
+            <% if (user) { %>
+            <li>Welcome <%= user.username %></li>
+            <li><a href="/logout">Log Out</a></li>
+            <% } else { %>
             <li><a href="/login">Login</a></li>
             <li><a href="/signup">Sign Up</a></li>
+            <% } %>
             </ul>
         </div>
     </nav>

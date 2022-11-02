@@ -4,9 +4,9 @@ const saltRounds = 10;
 const jwt = require('jsonwebtoken');
 
 const maxAge = 3 * 24 * 60 * 60;
-const createToken = (id) => {
+const createToken = (id, username) => {
     // remember to hide secret in .env file
-    return jwt.sign({ id }, process.env.JWT_SECRET, {
+    return jwt.sign({ id, username: username }, process.env.JWT_SECRET, {
         expiresIn: maxAge
     });
 }
@@ -84,7 +84,22 @@ module.exports.signup_post = async (req, res) => {
 }
 
 module.exports.login_get = (req, res) => {
-    res.render('login');
+    // if (req.cookies.jwt) {
+ 
+    //     console.log('if')
+    //     const user = User.findOne({ "_id": jwt.verify(req.cookies.jwt, process.env.JWT_SECRET).id}, "username")
+    //     console.log(user)
+      
+    //     res.render('index', { title: 'ReadIt', user });
+    //   } else {
+    //     console.log('else')
+    //     res.render('index', { title: 'ReadIt', user: false });
+    //   }
+
+    console.log('login get')
+    const user = { username: "Stephen King" }
+    res.render('login', user);
+
 }
 
 module.exports.login_post = async (req, res) => {
@@ -95,14 +110,14 @@ module.exports.login_post = async (req, res) => {
         username: username,
         email: email,
     });
-    console.log(existingUser);
 
     if (existingUser) {
         const auth = await bcrypt.compare(password, existingUser.password);
             if (auth) {
                 console.log('user logged in');
-                const token = createToken(existingUser._id);
+                const token = createToken(existingUser._id, existingUser.username);
                 res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000});
+                console.log("jwt token", token)
                 res.status(201).json({user: existingUser._id});
             } else {
                 console.log(err);
@@ -111,8 +126,9 @@ module.exports.login_post = async (req, res) => {
     }
 }
 
-// module.exports.logout_get = (req, res) => {
-//     res.cookie('jwt', '', { maxAge: 1 });
-//     res.redirect('/');
-// }
+module.exports.logout_get = (req, res) => {
+    res.cookie('jwt', '', { maxAge: 1 });
+    res.redirect('/');
+}
+
 

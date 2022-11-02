@@ -1,0 +1,16 @@
+<%- include('partials/header'); -%>
+
+<div>
+  <% if (review) { %>
+  <h3>
+    Are you sure you want to delete your review for <%= review.book.title %>?
+  </h3>
+  <p><%= review.content %></p>
+  <button class="button is-medium is-danger is-rounded">Delete Review</button>
+  <button class="button is-medium is-rounded">Cancel</button>
+  <%} else { %>
+  <p>No Review found</p>
+  <% } %>
+</div>
+
+<%- include('partials/footer'); -%>

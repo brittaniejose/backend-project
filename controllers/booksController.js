@@ -1,6 +1,8 @@
-const Book = require('../models/Books');
-const Review = require('../models/Books');
-
+const Book = require('../models/Book');
+const User = require('../models/User');
+const Review = require('../models/Review');
+const ClubUser = require('../models/Club');
+const jwt = require('jsonwebtoken');
 
 
 module.exports.genre_get = (req, res) => {
@@ -32,16 +34,34 @@ module.exports.genre_get = (req, res) => {
 
 }
 
+// More Info Page
+// Show reviews here
 module.exports.book_get = (req, res) => {
     let { bookID, genre } = req.params;
-    Book.findOne({ "_id": bookID, "genre": genre }, "title author published desc cover rating genre reviews", function (err, book) {
-        console.log(book);
-        console.log(bookID);
+    Book.findOne({ "_id": bookID, "genre": genre }, "title author published desc cover rating genre reviews", async function (err, book) {
+        // console.log(book);
+        // console.log(bookID);
 
-        
-        res.render('bookTemplate', {book})
+        const reviews = await Review.find({ book: bookID }).populate('author')
+
+        const user =  jwt.verify(req.cookies.jwt, process.env.JWT_SECRET)
+
+        res.render('bookTemplate', {book, reviews, user})
     })
 }
+
+// Review GET Here
+module.exports.review_delete_get = (req, res) => {
+    let { bookID, reviewID } = req.params
+    const user = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET)
+
+    const review = Review.findOne({ _id: reviewID, book: bookID }).populate('book')
+
+    console.log(review)
+    res.render('review-delete', { review, user })
+    
+}
+// Review.deleteOne({  })
 
 module.exports.search_get = (req, res) => {
     // search db to return books that match search value
@@ -59,31 +79,80 @@ module.exports.search_get = (req, res) => {
             res.send(err)
         }
         console.log(req.query);
-        console.log(books)
-        res.render('searchTemplate', {books})
+        const user =  jwt.verify(req.cookies.jwt, process.env.JWT_SECRET) 
+
+        res.render('searchTemplate', {books, user})
     })
 
 };
 
 module.exports.add_review_get = (req, res) => {
     let { bookID } = req.params;
-    Book.findOne({ "_id": bookID }, "title author published desc cover rating genre", function (err, book) {
-        console.log(book);
-        console.log(bookID);
-
-        res.render('add-review', {book})
-    })
     
+    Book.findOne({ "_id": bookID }, "title author published desc cover rating genre", function (err, book) {
+        // console.log(book);
+        // console.log(bookID);
+        
+        
+        const user =  jwt.verify(req.cookies.jwt, process.env.JWT_SECRET);
+        
+        res.render('add-review', {book, user})
+
+    })
+      
 }
 
 module.exports.add_review_post = (req, res) => {
+    console.log('add review post');
+    let { bookID } = req.params
+    let { author, content } = req.body
 
+    const desiredBook = Book.findOne({ "_id": bookID })
+    
+    const token = req.cookies.jwt
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);  
+    var userId = decoded.id  
+    console.log(userId)  
+    const currentUser = User.findOne({ "_id": userId })
+    
+    if (desiredBook) {
+        console.log(bookID, currentUser._id, content)
+        newReview = Review.create({ book: bookID, author: userId, content }, function (err, review) {
+            if (err) {
+                console.log(err);
+                res.send("there was an err " + err)
+            } else {
+                console.log(review)
+                res.redirect(302, '/');
+            }
+        })
+        
+    }
+    
 }
 
 module.exports.join_club_get = (req, res) => {
-    res.render('join-club');
+    const user =  jwt.verify(req.cookies.jwt, process.env.JWT_SECRET) 
+    res.render('join-club', { user });
 }
 
-module.exports.join_club_post = (req, res) => {
+module.exports.join_club_post = async (req, res) => {
+    let { dUsername, discordID, bkSuggestions } = req.body
 
+    const existingClubUser = await ClubUser.findOne({
+        dUsername: dUsername,
+        discordID: discordID
+    })
+
+    console.log(existingClubUser, "existingClubUser");
+
+    if(!existingClubUser) {
+        const newClubUser = await ClubUser.create({ dUsername, discordID, bkSuggestions });
+
+        console.log("new club user!", newClubUser);
+    
+        res.redirect(302, '/');
+    } else {
+        throw Error("You've already joined");
+    }
 }

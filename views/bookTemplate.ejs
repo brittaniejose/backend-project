@@ -14,7 +14,13 @@
   <% if (reviews) { %>
   <ul>
     <% reviews.forEach(function(review) { %> 
-    <li><%= book.review %></li>
+    <li><%= review.content %></li>
+    <li>Posted by: <%= review.author.username %></li>
+    <% if (user.username === review.author.username) { %>
+      <% reviews.forEach(function(review) { %> 
+      <button class="button is-small is-danger is-rounded">Delete Review</button>
+      <%}); %>
+      <% } %>
     <%}); %>
   </ul>
   <% } %>

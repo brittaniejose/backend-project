@@ -11,9 +11,9 @@
       <li>Rating: <%= book.rating %></li>
   </ul>
 
-  <form id="addRev" action="/add-review" method="post">
+  <form id="addRev" action="/add-review/<%= book._id %>" method="post" onsubmit="reviewSubmitted()">
     <label>Tell us what you thought!</label>
-    <textarea name="addrev" type="text" class="textarea is-medium is-focused" placeholder="Write your review here" rows="10"></textarea>
+    <textarea name="content" type="text" class="textarea is-medium is-focused" placeholder="Write your review here" rows="10"></textarea>
     <button type="submit" id="reviewBtn" class="button is-link is-rounded">Submit Review</button>
   </form>
   
@@ -21,5 +21,11 @@
   <p>No book found</p>
   <% } %>
 </div>
+
+<script>
+    function reviewSubmitted() {
+      alert("Your review was submitted.");
+    }
+  </script>
 
 <%- include('partials/footer'); -%>

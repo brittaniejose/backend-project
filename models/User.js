@@ -28,7 +28,7 @@ const userSchema = new Schema ({
     reviews: [{ type: Schema.Types.ObjectId, ref: 'Review'}]
 });
 
-const User = mongoose.model('user', userSchema);
+const User = mongoose.model('User', userSchema);
 
 
 module.exports = User;
