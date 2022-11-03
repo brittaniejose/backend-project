@@ -45,7 +45,16 @@ const createToken = (id, username) => {
 
 
 module.exports.signup_get = (req, res) => {
-    res.render('signup');
+    if (req.cookies.jwt) {
+
+        const user =  jwt.verify(req.cookies.jwt, process.env.JWT_SECRET)
+        console.log(user)
+      
+        res.render('signup', { user });
+    } else {
+    
+        res.render('signup', { user: false });
+    }
 }
 
 module.exports.signup_post = async (req, res) => {
@@ -84,22 +93,16 @@ module.exports.signup_post = async (req, res) => {
 }
 
 module.exports.login_get = (req, res) => {
-    // if (req.cookies.jwt) {
- 
-    //     console.log('if')
-    //     const user = User.findOne({ "_id": jwt.verify(req.cookies.jwt, process.env.JWT_SECRET).id}, "username")
-    //     console.log(user)
+    if (req.cookies.jwt) {
+
+        const user =  jwt.verify(req.cookies.jwt, process.env.JWT_SECRET)
+        console.log(user)
       
-    //     res.render('index', { title: 'ReadIt', user });
-    //   } else {
-    //     console.log('else')
-    //     res.render('index', { title: 'ReadIt', user: false });
-    //   }
-
-    console.log('login get')
-    const user = { username: "Stephen King" }
-    res.render('login', user);
-
+        res.render('login', { user });
+      } else {
+    
+        res.render('login', { user: false });
+      }
 }
 
 module.exports.login_post = async (req, res) => {
@@ -120,7 +123,7 @@ module.exports.login_post = async (req, res) => {
                 console.log("jwt token", token)
                 res.status(201).json({user: existingUser._id});
             } else {
-                console.log(err);
+                
             res.redirect('/signup')
             }
     }

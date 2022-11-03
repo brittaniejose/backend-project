@@ -2,31 +2,49 @@
 
 <div>
   <% if (book) { %>
-  <p><%= book.title %></p>
-  <ul>
-    <li><%= book.author %></li>
-    <li><img src="/images/<%= book.cover %>" /></li>
-    <li>Genre: <%= book.genre[0] %></li>
-    <li>Rating: <%= book.rating %></li>
-    <li>Description: <%= book.desc %></li>
-  </ul>
-  <p>Reviews</p>
-  <% if (reviews) { %>
-  <ul>
-    <% reviews.forEach(function(review) { %>
-    <li><%= review.content %></li>
-    <li>Posted by: <%= review.author.username %></li>
-    <% if (user.username === review.author.username) { %> <%
-    reviews.forEach(function(review) { %>
-    <span class="button is-small is-danger is-rounded"
-      ><a href="/review-delete/<%= review.book._id %>/<%= review._id %>"
-        >Delete Review</a
-      ></span>
-    <span class="button is-small is-rounded is-primary"><a href="/review-edit/<%= review.book._id %>/<%= review._id %>">Edit Review</a></span>
-    <%}); %> <% } %> <%}); %>
-  </ul>
+      <div class="card">
+        <div class="card-header">
+          <p class="title is-5"><%= book.title %></p>
+          <p class="subtitle is-6"><%= book.author %></p>
+        </div>
+        
+          <div class="book-content">
+            <img src="/images/<%= book.cover %>">
+            <div>
+              <div>
+                <strong>Genre: <%= book.genre[0] %>, <%=book.genre[1] %></strong>
+                <p><strong>Rating:</strong> <%= book.rating %></p>
+              </div>
+              <p><strong>Description:</strong> <%= book.desc %></p>
+            </div>
+          </div>
+      </div>
+  <br>
+  <div class="card">
+    <div class="card-header">
+      <p class="title is-5">Reviews</p>
+    </div>
+    <% if (reviews) { %>
+    <div class="card-content">
+      <% reviews.forEach(function(review) { %>
+     <p><%= review.content %></p>
+     <strong><p>Posted by: <%= review.author.username %></p></strong>
+      
+     <% if (user.username === review.author.username) { %> <%
+      reviews.forEach(function(review) { %>
+      <span style="color: red"><a href="/review-delete/<%= review.book._id %>/<%= review._id %>">Delete</a></span>
+      <span style="color: green"><a href="/review-edit/<%= review.book._id %>/<%= review._id %>">Edit</a><span>
+      <%}); %> 
+      
+      <% } %> 
+      <nav class="navbar-divider"></nav>
+      <%}); %>
+      
+    </div>
+  </div>
   <% } %>
-  <span class="button is-link is-rounded"
+  <br>
+  <span class="button is-primary is-rounded"
     ><a href="/add-review/<%= book._id %>">Add Review</a></span>
 
   <%} else { %>

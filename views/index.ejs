@@ -1,8 +1,10 @@
 <%- include('partials/header'); -%>
 
 <div>
-  <p>Welcome to <%= title %>!</p>
-  <h2>Find your next page turner here.</h2>
+  <div id="index-head">
+    <p class="title">Welcome to <%= title %>!</p>
+    <p class="title is-4">Find your next page turner here.</p>
+  </div>
 
   <form id="search" action="/search" method="GET">
     <input
@@ -17,40 +19,55 @@
   </form>
 </div>
 
-<div class="notification is-primary" id="bks">
-  <p>
-    Come read with us on Wednesdays! Join our bookclub to receive access to our
-    discord server.
-  </p>
-  <span class="button is-light is-link is-rounded"
-    ><a href="/join-club">Join Club</a></span
-  >
-  <div>
-    <h3>Book Schedule</h3>
-    <ul>
-      <li>Nov 2nd - Nov 30th: Gone Girl</li>
-      <li>Dec 7th - Jan 4th: Fear and Trembling</li>
-      <li>Jan 11th - Feb 1st: The Shining</li>
-      <li>Feb 8th - Mar 1st: A Game of Thrones</li>
-      <li>Mar 8th - Mar 29th: The Hunger Games</li>
-      <li>Apr 5th - Apr 26th: The Devil's Chessboard</li>
-      <li>May 3rd - May 24th: May Bird and The Ever After</li>
-    </ul>
+
+<div id="index-maindiv">
+  <div id="bkc" class="message is-primary">
+    <div class="message-header">
+      <p>Book Club</p>
+    </div>
+    <div class="message-body">
+      <p>
+        Come read with us on Wednesdays! Join our bookclub to receive access to our
+        discord server.
+      </p>
+      <br>
+      <span class="button is-light is-link is-rounded"
+        ><a href="/join-club">Join Club</a></span
+      >
+      <div>
+        <h3 id="bks">Book Schedule</h3>
+        <ul>
+          <li>Nov 2nd - Nov 30th: Gone Girl</li>
+          <li>Dec 7th - Jan 4th: Fear and Trembling</li>
+          <li>Jan 11th - Feb 1st: The Shining</li>
+          <li>Feb 8th - Mar 1st: A Game of Thrones</li>
+          <li>Mar 8th - Mar 29th: The Hunger Games</li>
+          <li>Apr 5th - Apr 26th: The Devil's Chessboard</li>
+          <li>May 3rd - May 24th: May Bird and The Ever After</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="genrediv" class="message is-info">
+    <div class="message-header">
+      <p>Genres</p>
+    </div>
+    <div class="message-body">
+      <ul id="genrechildr">
+        <li><a href="/genre/Fiction">Fiction</a></li>
+        <li><a href="/genre/Non-Fiction">Non-Fiction</a></li>
+        <li><a href="/genre/Horror">Horror</a></li>
+        <li><a href="/genre/Psychological-Thriller">Psychological-Thriller</a></li>
+        <li><a href="/genre/Fantasy">Fantasy</a></li>
+        <li><a href="/genre/Dystopian">Dystopian</a></li>
+        <li><a href="/genre/Philosophy">Philosophy</a></li>
+      </ul>
+    </div>
   </div>
 </div>
 
 
-<div class="notification is-warning is-light">
-  <h3>Genres</h3>
-  <ul>
-    <li><a href="/genre/Fiction">Fiction</a></li>
-    <li><a href="/genre/Non-Fiction">Non-Fiction</a></li>
-    <li><a href="/genre/Horror">Horror</a></li>
-    <li><a href="/genre/Psychological-Thriller">Psychological-Thriller</a></li>
-    <li><a href="/genre/Fantasy">Fantasy</a></li>
-    <li><a href="/genre/Dystopian">Dystopian</a></li>
-    <li><a href="/genre/Philosophy">Philosophy</a></li>
-  </ul>
-</div>
 
 <%- include('partials/footer'); -%>

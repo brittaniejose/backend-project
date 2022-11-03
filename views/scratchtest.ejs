@@ -41,7 +41,7 @@
 
 <div class="message" id="tr">
   <div class="message-header">
-    <p>Top Rated</p>
+    <p><%= book.genre[0] %> Books</p>
   </div>
   <% if (books) { %> 
     <% books.forEach(function(book){ %>

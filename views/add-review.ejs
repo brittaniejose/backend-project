@@ -2,22 +2,22 @@
 
 <div>
   <% if (book) { %>
-  <h3>Add Review</h3>
-  <p><%= book.title %></p>
+  <h3 class="title is-4">Add Review for <%= book.title %> by <%= book.author %></h3>
+  <br>
   <ul>
-    <li><%= book.author %></li>
     <li><img src="/images/<%= book.cover %>" /></li>
-    <li>Genre: <%= book.genre[0] %></li>
-    <li>Rating: <%= book.rating %></li>
+    <li><strong>Genre:</strong> <%= book.genre[0] %></li>
+    <li><strong>Rating:</strong> <%= book.rating %></li>
   </ul>
-
+  <br>
   <form
     id="addRev"
     action="/add-review/<%= book._id %>"
     method="post"
     onsubmit="reviewSubmitted()"
   >
-    <label>Tell us what you thought!</label>
+    <p class="subtitle">Tell us what you thought!</p>
+    <br>
     <textarea
       name="content"
       type="text"
@@ -25,6 +25,7 @@
       placeholder="Write your review here"
       rows="10"
     ></textarea>
+    <br>
     <button type="submit" id="reviewBtn" class="button is-link is-rounded">
       Submit Review
     </button>
