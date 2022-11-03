@@ -4,28 +4,31 @@
   <% if (book) { %>
   <p><%= book.title %></p>
   <ul>
-      <li><%= book.author %></li>
-      <li><img src="/images/<%= book.cover %>"></li>
-      <li>Genre: <%= book.genre[0] %></li>
-      <li>Rating: <%= book.rating %></li>
-      <li>Description: <%= book.desc %></li>
+    <li><%= book.author %></li>
+    <li><img src="/images/<%= book.cover %>" /></li>
+    <li>Genre: <%= book.genre[0] %></li>
+    <li>Rating: <%= book.rating %></li>
+    <li>Description: <%= book.desc %></li>
   </ul>
   <p>Reviews</p>
   <% if (reviews) { %>
   <ul>
-    <% reviews.forEach(function(review) { %> 
+    <% reviews.forEach(function(review) { %>
     <li><%= review.content %></li>
     <li>Posted by: <%= review.author.username %></li>
-    <% if (user.username === review.author.username) { %>
-      <% reviews.forEach(function(review) { %> 
-      <button class="button is-small is-danger is-rounded">Delete Review</button>
-      <%}); %>
-      <% } %>
-    <%}); %>
+    <% if (user.username === review.author.username) { %> <%
+    reviews.forEach(function(review) { %>
+    <span class="button is-small is-danger is-rounded"
+      ><a href="/review-delete/<%= review.book._id %>/<%= review._id %>"
+        >Delete Review</a
+      ></span>
+    <span class="button is-small is-rounded is-primary"><a href="/review-edit/<%= review.book._id %>/<%= review._id %>">Edit Review</a></span>
+    <%}); %> <% } %> <%}); %>
   </ul>
   <% } %>
-  <span class="button is-link is-rounded"><a href="/add-review/<%= book._id %>">Add Review</a></span>
-  
+  <span class="button is-link is-rounded"
+    ><a href="/add-review/<%= book._id %>">Add Review</a></span>
+
   <%} else { %>
   <p>No book found</p>
   <% } %>

@@ -29,7 +29,9 @@ module.exports.genre_get = (req, res) => {
     Book.find({ "genre": genre }, "title author published cover genre rating", function(err, books) {
         console.log(books);
 
-        res.render('genreTemplate', {books})
+        const user =  jwt.verify(req.cookies.jwt, process.env.JWT_SECRET)
+
+        res.render('genreTemplate', {books, user})
     });
 
 }
@@ -43,7 +45,6 @@ module.exports.book_get = (req, res) => {
         // console.log(bookID);
 
         const reviews = await Review.find({ book: bookID }).populate('author')
-
         const user =  jwt.verify(req.cookies.jwt, process.env.JWT_SECRET)
 
         res.render('bookTemplate', {book, reviews, user})
@@ -55,13 +56,49 @@ module.exports.review_delete_get = (req, res) => {
     let { bookID, reviewID } = req.params
     const user = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET)
 
-    const review = Review.findOne({ _id: reviewID, book: bookID }).populate('book')
-
-    console.log(review)
-    res.render('review-delete', { review, user })
-    
+    const review = Review.findOne({ _id: reviewID, book: bookID }, "content").populate('book').exec(function (err, review) {
+        
+        res.render('review-delete', { review, user })
+    }) 
 }
-// Review.deleteOne({  })
+
+module.exports.review_delete_post = (req, res) => {
+    let { bookID, reviewID } = req.params
+
+    Review.deleteOne({ _id: reviewID, book: bookID })
+
+    res.redirect(302, '/')
+
+
+}
+
+module.exports.review_edit_get = (req, res) => {
+    const user = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET)
+
+    let { bookID, reviewID } = req.params
+
+    const review = Review.findOne({ _id: reviewID, book: bookID }, "content").populate('book').exec(function (err, review) {
+        
+        res.render('review-edit', { review, user })
+    }) 
+
+}
+
+module.exports.review_edit_post = (req, res) => {
+    let { bookID, reviewID } = req.params;
+    let newContent = req.body;
+
+    Review.updateOne({ "_id": reviewID }, { "content": newContent.content }, function (err, review) {
+        if (err) {
+            console.log(req.body)
+            console.log(err, "review edit error")
+        } else {
+            console.log(newContent, "updated review with new content");
+
+            res.redirect("/");
+        }
+    })
+}
 
 module.exports.search_get = (req, res) => {
     // search db to return books that match search value

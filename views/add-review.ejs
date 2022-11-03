@@ -2,30 +2,43 @@
 
 <div>
   <% if (book) { %>
-    <h3>Add Review</h3>
+  <h3>Add Review</h3>
   <p><%= book.title %></p>
   <ul>
-      <li><%= book.author %></li>
-      <li><img src="/images/<%= book.cover %>"></li>
-      <li>Genre: <%= book.genre[0] %></li>
-      <li>Rating: <%= book.rating %></li>
+    <li><%= book.author %></li>
+    <li><img src="/images/<%= book.cover %>" /></li>
+    <li>Genre: <%= book.genre[0] %></li>
+    <li>Rating: <%= book.rating %></li>
   </ul>
 
-  <form id="addRev" action="/add-review/<%= book._id %>" method="post" onsubmit="reviewSubmitted()">
+  <form
+    id="addRev"
+    action="/add-review/<%= book._id %>"
+    method="post"
+    onsubmit="reviewSubmitted()"
+  >
     <label>Tell us what you thought!</label>
-    <textarea name="content" type="text" class="textarea is-medium is-focused" placeholder="Write your review here" rows="10"></textarea>
-    <button type="submit" id="reviewBtn" class="button is-link is-rounded">Submit Review</button>
+    <textarea
+      name="content"
+      type="text"
+      class="textarea is-medium is-focused"
+      placeholder="Write your review here"
+      rows="10"
+    ></textarea>
+    <button type="submit" id="reviewBtn" class="button is-link is-rounded">
+      Submit Review
+    </button>
   </form>
-  
+
   <%} else { %>
   <p>No book found</p>
   <% } %>
 </div>
 
 <script>
-    function reviewSubmitted() {
-      alert("Your review was submitted.");
-    }
-  </script>
+  function reviewSubmitted() {
+    alert("Your review was submitted.");
+  }
+</script>
 
 <%- include('partials/footer'); -%>

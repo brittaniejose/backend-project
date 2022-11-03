@@ -6,11 +6,19 @@
     Are you sure you want to delete your review for <%= review.book.title %>?
   </h3>
   <p><%= review.content %></p>
-  <button class="button is-medium is-danger is-rounded">Delete Review</button>
-  <button class="button is-medium is-rounded">Cancel</button>
+  <form action="/review-delete/<%= review.book._id %>/<%= review._id %>" method="post">
+    <button type='submit' onsubmit="reviewdeleted()" class="button  is-danger is-rounded">Delete Review</button>
+  </form>
+  <span class="button is-rounded"><a href="/genre/<%= review.book.genre[0] %>/<%= review.book._id %>">Cancel</a></span>
   <%} else { %>
   <p>No Review found</p>
   <% } %>
 </div>
+
+<script>
+    function reviewdeleted() {
+        alert('Your review was deleted.')
+    }
+</script>
 
 <%- include('partials/footer'); -%>

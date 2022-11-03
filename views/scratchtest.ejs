@@ -39,6 +39,38 @@
   </div>
 </div>
 
+<div class="message" id="tr">
+  <div class="message-header">
+    <p>Top Rated</p>
+  </div>
+  <% if (books) { %> 
+    <% books.forEach(function(book){ %>
+  <div class="card">
+    <div class="card-image">
+      <figure class="image is-4by3">
+        <img src="<%= book.cover %>" alt="<%= book.title %> img" />
+      </figure>
+    </div>
+    <div class="content">
+      <ul>
+        <li><%= book.title %></li>
+        <li><%= book.author %></li>
+        <li>Genre: <%= book.genre[0] %></li>
+        <li>Rating: <%= book.rating %></li>
+      </ul>
+      <br />
+      <span
+        ><a href="/genre/<%= book.genre[0] %>/<%= book._id %>"
+          >More Info</a
+        ></span
+      >
+    </div>
+  </div>
+  <% }); %> 
+  <%} else { %>
+  <p>No books found</p>
+  <% } %>
+</div>
 
 <div class="notification is-warning is-light">
   <h3>Genres</h3>

@@ -1,0 +1,48 @@
+<%- include('partials/header'); -%>
+
+<div>
+  <% if (review) { %>
+  <article class="message is-link">
+    <div class="message-header">
+      <p>Your Review for <%= review.book.title %></p>
+    </div>
+    <div class="message-body"><%= review.content %></div>
+  </article>
+
+  <form
+    id="editRev"
+    action="/review-edit/<%= review.book._id %>/<%= review._id %>"
+    method="post"
+    onsubmit="reviewSaved()"
+  >
+    <label>Edit Review</label>
+    <textarea
+      name="content"
+      type="text"
+      class="textarea is-medium is-focused"
+      rows="10"
+    >
+<%= review.content %></textarea
+    >
+    <button type="submit" id="saveRevEdit" class="button is-link is-rounded">
+      Save
+    </button>
+    <span class="button  is-rounded"
+      ><a href="/genre/<%= review.book.genre[0] %>/<%= review.book._id %>"
+        >Cancel</a
+      ></span
+    >
+  </form>
+
+  <%} else { %>
+  <p>No review found</p>
+  <% } %>
+</div>
+
+<script>
+  function reviewSaved() {
+    alert("Edited review was saved");
+  }
+</script>
+
+<%- include('partials/footer'); -%>
