@@ -3,33 +3,147 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-#siteName {
-  font-family: 'Rockwell';
-  font-size: 40px;
-  font-weight: bold;
+@media screen and (max-width: 768px) {
+  .navbar {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  #logoNavItems {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #siteName {
+    margin-bottom: 20px;
+  }
+
+  .userDiv {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mainDiv {
+    padding: 20px;
+  }
+
+  .featuresDiv {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    margin-bottom: 20px;
+  }
+
+  #bkc {
+    margin-bottom: 30px;
+  }
+
+  .book-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .singleCard {
+    padding: 20px
+  }
+
+  .addRevContainer {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #reviewInput {
+    width: 325px;
+  }
+
+  #reviewTitle {
+    text-align: center;
+  
+  }
+
 }
 
-nav{
+
+@media screen and (min-width: 769px) {
+  .navbar {
+    display: flex;
+    flex-direction: row;
+  }
+  #logoNavItems {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .userDiv {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .featuresDiv {
+    display: flex;
+    flex-direction: row;
+    margin: 50px 0px 20px 0px;
+  }
+  
+  #genrediv {
+    width: 300px;
+  }
+
+  #bkc {
+    margin-right: 40px;
+    width: 1000px;
+  }
+
+  .book-content {
+    display: flex;
+  }
+
+  .addRevContainer {
+    display: flex;
+    flex-direction: row;
+  }
+
+  #reviewForm {
+    width: 1019px;
+  }
+
+  #bookInfo {
+    margin-right: 60px;
+  }
+
+  #reviewObjContainer {
+    padding: 20px;
+  }
+
+  #loginform {
+    padding-top: 100px;
+    padding-bottom: 125px;
+  }
+}
+
+
+.reviewDeleteContainer {
+  padding: 20px;
+}
+
+#siteName {
+  font-family: "Rockwell";
+  font-size: 40px;
+  font-weight: bold;
+  margin-right: 50px;
+}
+
+nav {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: flex-end;
   margin: 25px 0px 50px 0px;
 }
 
-.uldiv {
-  display: flex;
-  align-items: center;
-  margin-bottom: 25px;
-}
-
-nav ul {
-  display: flex;
-  align-items: center;
-}
-
-nav li {
-  margin-left: 15px;
-}
 
 #search {
   display: flex;
@@ -38,13 +152,9 @@ nav li {
 }
 
 #searchBtn {
-  margin: 0px 10px 10px 10px;
+  margin: 10px;
 }
 
-#bkc {
-  margin-right: 40px;
-  width: 1000px
-}
 
 #bks {
   margin: 20px 0px 20px 0px;
@@ -56,6 +166,7 @@ nav li {
   display: flex;
   flex-direction: column;
   padding: 10px;
+  inline-size: 325px;
 }
 
 .bookcards {
@@ -66,17 +177,31 @@ nav li {
   margin-right: 50px;
 }
 
-.book-content {
+#addrevsubmit {
   display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 60px;
+}
+
+#submitRevBtn {
+  margin-right: 10px;
 }
 
 #deleteRevBtn {
-  display: flex;
-  flex-direction: row;
+  margin-right: 5px;
 }
 
-#deleteRevBtn > button {
-  margin-right: 10px;
+.editRevContainer {
+  padding: 20px;
+}
+
+#editRevLabel {
+  margin-bottom: 15px;
+}
+
+#reviewsLabel {
+  padding: 20px 20px 0px 20px;
 }
 
 .book-content > div {
@@ -90,7 +215,6 @@ a {
   text-decoration: none;
 }
 
-
 #index-head {
   display: flex;
   align-items: center;
@@ -98,22 +222,18 @@ a {
   margin-bottom: 30px;
 }
 
-#index-maindiv {
-  margin: 50px 0px 20px 0px;
-  display: flex;
-  flex-direction: row;
-}
-
-#genrediv {
-  width: 300px;
-}
 
 #genrechildr {
   display: flex;
   flex-flow: column;
   align-items: center;
-  justify-content: space-evenly;
+  
 }
+
+#genrechildr > li {
+  padding-bottom: 20px;
+}
+
 
 footer {
   text-align: center;

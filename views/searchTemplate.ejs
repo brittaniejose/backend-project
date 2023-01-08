@@ -1,35 +1,26 @@
 <%- include('partials/header'); -%>
 
 <div class="bookcards">
-  <% if (books) { %>
-    <% books.forEach(function(book){ %>
-      <div class="card">
-        <div class="card-header">
-          <p class="title is-5"><%= book.title %></p>
-          <p class="subtitle is-6"><%= book.author %></p>
-        </div>
-        
-          <div class="card-image">
-            <img src="/images/<%= book.cover %>">
-          </div>
-          <div class="card-content">
-            <p><strong>Genre:</strong> <%= book.genre[0] %>, <%=book.genre[1] %></p>
-            <p><strong>Rating:</strong> <%= book.rating %></p>
-            <br>
-            <p><a href="/genre/<%= book.genre[0] %>/<%= book._id %>">More Info</a></p>
-          </div>
-      </div>
-    <% }); %>
+  <% if (books) { %> <% books.forEach(function(book){ %>
+  <div class="card">
+    <div class="card-header">
+      <p class="title is-5"><%= book.title %></p>
+      <p class="subtitle is-6"><%= book.author %></p>
+    </div>
 
-  <%} else { %> 
+    <div class="card-image">
+      <img src="/images/<%= book.cover %>" />
+    </div>
+    <div class="card-content">
+      <p><strong>Genre:</strong> <%= book.genre[0] %>, <%=book.genre[1] %></p>
+      <p><strong>Rating:</strong> <%= book.rating %></p>
+      <br />
+      <p><a href="/genre/<%= book.genre[0] %>/<%= book._id %>">More Info</a></p>
+    </div>
+  </div>
+  <% }); %> <%} else { %>
   <p>No books found</p>
   <% } %>
 </div>
-
-<script>
-  function reviewSubmitted() {
-    alert("Your review was submitted.");
-  }
-</script>
 
 <%- include('partials/footer'); -%>

@@ -1,6 +1,6 @@
 <%- include('partials/header'); -%>
 
-<div>
+<div class="reviewDeleteContainer">
   <% if (review) { %>
   <article class="message is-link">
     <div class="message-header">
@@ -9,9 +9,9 @@
     <div class="message-body"><%= review.content %></div>
   </article>
 
-  <form action="/review-delete/<%= review.book._id %>/<%= review._id %>" method="post">
+  <form action="/review-delete/<%= review.book.genre[0] %>/<%= review.book._id %>/<%= review._id %>" method="post" onSubmit="reviewdeleted()">
     <div id="deleteRevBtn">
-        <button type='submit' onsubmit="reviewdeleted()" class="button  is-danger is-rounded">Delete Review</button>
+        <button type='submit' class="button  is-danger is-rounded">Delete Review</button>
       </form>
       <span class="button is-rounded"><a href="/genre/<%= review.book.genre[0] %>/<%= review.book._id %>">Cancel</a></span>
     </div>
