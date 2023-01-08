@@ -1,15 +1,74 @@
 <%- include('partials/header'); -%>
 
-<div>
+<div class="mainDiv">
+  <div id="index-head">
+    <p class="title">Welcome to <%= title %>!</p>
+    <p class="title is-4">Find your next page turner here.</p>
+  </div>
 
-  <h1><%= title %></h1>
-  <p>Welcome to <%= title %></p>
+  <form id="search" action="/search" method="GET">
+    <input
+      name="search"
+      type="text"
+      class="input is-medium is-focused is-rounded"
+      placeholder="Search title or author" />
+    <button type="submit" id="searchBtn" class="button is-link is-rounded">
+      Find It!
+    </button>
+  </form>
 
-  <form id="search">
-    <input class="input is-medium is-focused is-rounded" placeholder="Search title or author">
-    <button type="submit" id="searchBtn" class="button is-link is-rounded">Find It!</button>
-</form>
+  <div class="featuresDiv">
+    <div id="bookclubDiv">
+      <div id="bkc" class="message is-primary">
+        <div class="message-header">
+          <p>Book Club</p>
+        </div>
+        <div class="message-body">
+          <p>
+            Come read with us on Wednesdays! Join our bookclub to receive access
+            to our discord server.
+          </p>
+          <br />
+          <button
+            type="button"
+            class="button is-primary is-rounded"
+            onClick="location.href='/join-club'">
+            Join Club
+          </button>
+          <div>
+            <h3 id="bks">Book Schedule</h3>
+            <ul>
+              <li>Nov 2nd - Nov 30th: Gone Girl</li>
+              <li>Dec 7th - Jan 4th: Fear and Trembling</li>
+              <li>Jan 11th - Feb 1st: The Shining</li>
+              <li>Feb 8th - Mar 1st: A Game of Thrones</li>
+              <li>Mar 8th - Mar 29th: The Hunger Games</li>
+              <li>Apr 5th - Apr 26th: The Devil's Chessboard</li>
+              <li>May 3rd - May 24th: May Bird and The Ever After</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <div id="genrediv" class="message is-info">
+      <div class="message-header">
+        <p>Genres</p>
+      </div>
+      <div class="message-body">
+        <ul id="genrechildr">
+          <li><a href="/genre/Fiction">Fiction</a></li>
+          <li><a href="/genre/Non-Fiction">Non-Fiction</a></li>
+          <li><a href="/genre/Horror">Horror</a></li>
+          <li>
+            <a href="/genre/Psychological-Thriller">Psychological-Thriller</a>
+          </li>
+          <li><a href="/genre/Fantasy">Fantasy</a></li>
+          <li><a href="/genre/Dystopian">Dystopian</a></li>
+          <li><a href="/genre/Philosophy">Philosophy</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
-
 <%- include('partials/footer'); -%>

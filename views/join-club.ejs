@@ -1,0 +1,86 @@
+<%- include('partials/header'); -%>
+
+<div class="suli">
+  <form class="suliform message is-success">
+    <div class="message-header">
+      <p>Join Our Book Club!</p>
+    </div>
+    <div class="message-body">
+      <div class="field">
+        <label class="label" for="dUsername">Discord Username</label>
+        <div class="control">
+          <input
+            type="text"
+            name="dUsername"
+            class="input is-medium is-success"
+            required />
+        </div>
+        <div id="dUsername"></div>
+      </div>
+
+      <div class="field">
+        <label class="label" for="discordID">Discord ID</label>
+        <div class="control">
+          <input
+            type="text"
+            name="discordID"
+            class="input is-medium is-success"
+            required />
+        </div>
+        <div id="discordID"></div>
+      </div>
+
+      <div class="field">
+        <label class="label" for="bkSuggestions">Book Suggestions</label>
+        <div class="control">
+          <textarea
+            name="bkSuggestions"
+            type="text"
+            class="textarea is-medium is-success"
+            placeholder="Give us any book suggestions here (optional)"
+            rows="10">
+          </textarea>
+        </div>
+        <div id="bkSuggs"></div>
+      </div>
+      <button type="submit" class="button is-success">Join</button>
+      <button type="button" class="button" onClick="history.go(-1)">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
+
+<script>
+  const form = document.querySelector("form");
+  const dUsernameError = document.getElementById("dUsername");
+  const discordIDError = document.getElementById("discordID");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const dUsername = form.dUsername.value;
+    const discordID = form.discordID.value;
+    const bkSuggestions = form.bkSuggestions.value;
+    try {
+      const res = await fetch("/join-club", {
+        method: "POST",
+        body: JSON.stringify({ dUsername, discordID, bkSuggestions }),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.errors) {
+        dUsernameError.textContent = data.errors.dUsername;
+        discordIDError.textContent = data.errors.discordID;
+      }
+      if (data.clubUser) {
+        alert("Thank you for joining. We will be reaching out to you shortly.");
+        location.assign("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
+</script>
+
+<%- include('partials/footer'); -%>

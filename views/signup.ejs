@@ -1,56 +1,87 @@
 <%- include('partials/header'); -%>
 
-<form>
-    <h2>Sign Up</h2>
-    <label for="username">Username</label>
-    <input type="text" name="username" required>
-    <div id="un"></div>
-    <label for="email">Email</label>
-    <input type="text" name="email" required />
-    <div id="em"></div>
-    <label for="password">Password</label>
-    <input type="password" name="password" required />
-    <div id="pass"></div>
-    <button>Sign Up</button>
-</form>
+<div class="suli">
+  <form class="suliform message is-primary">
+    <div class="message-header">
+      <p>Sign Up</p>
+    </div>
+    <div class="message-body">
+      <div class="field">
+        <label class="label" for="username">Username</label>
+        <div class="control">
+          <input
+            class="input is-medium is-primary"
+            type="text"
+            name="username"
+            required />
+        </div>
+        <div id="un"></div>
+      </div>
+
+      <div class="field">
+        <label class="label" for="email">Email</label>
+        <div class="control">
+          <input
+            class="input is-medium is-primary"
+            type="text"
+            name="email"
+            required />
+        </div>
+        <div id="em"></div>
+      </div>
+
+      <div class="field">
+        <label class="label" for="password">Password</label>
+        <input
+          class="input is-medium is-primary"
+          type="password"
+          name="password"
+          required />
+      </div>
+      <div id="pass"></div>
+      <button class="button is-primary">Sign Up</button>
+    </div>
+  </form>
+</div>
+
 <script>
-    const form = document.querySelector('form');
-    const usernameError = document.getElementById('un');
-    const emailError = document.getElementById('em');
-    const passwordError = document.getElementById('pass');
+  const form = document.querySelector("form");
+  const usernameError = document.getElementById("un");
+  const emailError = document.getElementById("em");
+  const passwordError = document.getElementById("pass");
 
-    form.addEventListener('submit', async (e) => { 
-        e.preventDefault();
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-        const username = form.username.value;
-        const email = form.email.value;
-        const password = form.password.value;
+    const username = form.username.value;
+    const email = form.email.value;
+    const password = form.email.value;
 
-        usernameError.textContent = '';
-        emailError.textContent = '';
-        passwordError.textContent = '';
+    usernameError.textContent = "";
+    emailError.textContent = "";
+    passwordError.textContent = "";
 
-        try {
-          const res = await fetch('/signup', {
-            method: 'POST',
-            body: JSON.stringify({ username, email, password }),
-            headers: { 'Content-Type': 'application/json' }
-          });
-          const data = await res.json();
-          console.log(data);
-          if (data.errors) {
-            usernameError.textContent = data.errors.username;
-            emailError.textContent = data.errors.email;
-            passwordError.textContent = data.errors.password;
-            console.log(usernameError.textContent);
-          }
-          if (data.user) {
-            location.assign('/');
-          }  
-        } catch (error) {
-            console.log(error);
-        }
-    });
+    try {
+      const res = await fetch("/signup", {
+        method: "POST",
+        body: JSON.stringify({ username, email, password }),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.errors) {
+        usernameError.textContent = data.errors.username;
+        emailError.textContent = data.errors.email;
+        passwordError.textContent = data.errors.password;
+        console.log(usernameError.textContent);
+      }
+      if (data.user) {
+        location.assign("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
 </script>
 
 <%- include('partials/footer'); -%>

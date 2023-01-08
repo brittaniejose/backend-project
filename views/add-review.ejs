@@ -1,0 +1,61 @@
+<%- include('partials/header'); -%>
+
+<div class="reviewObjContainer">
+  <% if (book) { %>
+  <h3 class="title is-4" id="reviewTitle">
+    Add Review for <%= book.title %> by <%= book.author %>
+  </h3>
+  <br />
+  <div class="addRevContainer">
+    <div id="bookInfo">
+      <ul>
+        <li><img src="/images/<%= book.cover %>" /></li>
+        <li><strong>Genre:</strong> <%= book.genre[0] %></li>
+        <li><strong>Rating:</strong> <%= book.rating %></li>
+      </ul>
+    </div>
+    <br />
+    <div id="reviewForm">
+      <form
+        id="addRev"
+        action="/add-review/<%= book.genre[0] %>/<%= book._id %>"
+        method="post"
+        onSubmit="reviewSubmitted()">
+        <p class="subtitle">Tell us what you thought!</p>
+        <br />
+        <textarea
+          name="content"
+          id="reviewInput"
+          type="text"
+          class="textarea is-medium is-focused"
+          placeholder="Write your review here"
+          rows="10"></textarea>
+        <br />
+        <div id="addrevsubmit">
+          <button type="submit" id="submitRevBtn" class="button is-link is-rounded">
+            Submit Review
+          </button>
+          <button
+            type="button"
+            onClick="history.go(-1)"
+            id="cancelReview"
+            class="button is-rounded">
+            Cancel
+          </button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <%} else { %>
+  <p>No book found</p>
+  <% } %>
+</div>
+<script>
+  function reviewSubmitted() {
+    alert("Your review was submitted.");
+  }
+</script>
+
+<%- include('partials/footer'); -%>

@@ -1,24 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
     <title>ReadIt</title>
-</head>
-<body class="container is-fullhd">
-    <nav>
+  </head>
+  <body class="container">
+    <nav class="navbar">
+      <div id="logoNavItems">
         <h1 id="siteName"><a href="/">ReadIt</a></h1>
-        <div class="uldiv">
-            <ul>
-            <li>Welcome User</li>
-            <li><a href="/login"></a>Login</a></li>
-            <li><a href="/signup"></a>Sign Up</a></li>
-            </ul>
-        </div>
-    </nav>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link"> Genres </a>
 
-    
-    
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="/genre/Fiction"> Fiction </a>
+            <hr class="navbar-divider" />
+            <a class="navbar-item" href="/genre/Non-Fiction"> Non-Fiction </a>
+            <hr class="navbar-divider" />
+            <a class="navbar-item" href="/genre/Horror"> Horror </a>
+            <hr class="navbar-divider" />
+            <a class="navbar-item" href="/genre/Psychological-Thriller">
+              Psychological-Thriller
+            </a>
+            <hr class="navbar-divider" />
+            <a class="navbar-item" href="/genre/Fantasy"> Fantasy </a>
+            <hr class="navbar-divider" />
+            <a class="navbar-item" href="/genre/Dystopian"> Dystopian </a>
+            <hr class="navbar-divider" />
+            <a class="navbar-item" href="/genre/Philosophy"> Philosophy </a>
+          </div>
+        </div>
+        <a class="navbar-item" href="/join-club"> Join Club </a>
+      </div>
+
+      <div class="userDiv">
+        <% if (user) { %>
+        <span class="navbar-item"
+          ><strong>Welcome <%= user.username %></strong></span
+        >
+        <a class="navbar-item" href="/logout">Log Out</a>
+        <% } else { %>
+        <a class="navbar-item" href="/login">Login</a>
+        <a class="navbar-item" href="/signup">Sign Up</a>
+        <% } %>
+      </div>
+    </nav>
+  </body>
+</html>

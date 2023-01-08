@@ -1,0 +1,58 @@
+<%- include('partials/header'); -%>
+
+<div>
+  <% if (book) { %>
+      <div class="card singleCard">
+        <div class="card-header">
+          <p class="title is-5"><%= book.title %></p>
+          <p class="subtitle is-6"><%= book.author %></p>
+        </div>
+        
+          <div class="book-content">
+            <img src="/images/<%= book.cover %>">
+            <div>
+              <div>
+                <strong>Genre: <a href="/genre/<%= book.genre[0] %>"><%= book.genre[0] %></a>
+                  <a href="/genre/<%= book.genre[1] %>"><% if (book.genre.length > 1) { %>, <%= book.genre[1] %> <% } %></a></strong>
+                <p><strong>Rating:</strong> <%= book.rating %></p>
+              </div>
+              <p><strong>Description:</strong> <%= book.desc %></p>
+            </div>
+          </div>
+      </div>
+  <br>
+
+  <div class="card">
+    <p class="title is-5" id="reviewsLabel">Reviews</p>
+    <nav class="navbar-divider"></nav>
+    <div class="card-content">
+      <% if (reviews) { %>
+      <% reviews.forEach(function(review) { %>
+     <p><%= review.content %></p>
+     <strong><p>Posted by: <% if (user.username === review.author.username) { %>You <%} else { %><%= review.author.username %><% } %></p></strong>
+      
+     <% if (user.username === review.author.username) { %> 
+      
+      <span id="deleteRevBtn"><a href="/review-delete/<%= book.genre[0] %>/<%= review.book._id %>/<%= review._id %>">Delete</a></span>
+      <span id="editBtn"><a href="/review-edit/<%= book.genre[0] %>/<%= review.book._id %>/<%= review._id %>">Edit</a><span>
+     
+      
+      <% } %> 
+      <nav class="navbar-divider"></nav>
+      <%}); %>
+      
+      <%} else { %>
+        <p>This book has not been reviewed yet</p>
+      <% } %>
+    </div>
+  </div>
+
+  <br>
+  <button class="button is-primary is-rounded" onClick="location.href='/add-review/<%= book.genre[0] %>/<%= book._id %>'">Add Review</button>
+
+  <%} else { %>
+  <p>No book found</p>
+  <% } %>
+</div>
+
+<%- include('partials/footer'); -%>

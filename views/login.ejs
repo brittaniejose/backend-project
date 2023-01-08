@@ -1,54 +1,66 @@
 <%- include('partials/header'); -%>
 
-<form>
-    <h2>Log In</h2>
-    <label for="username">Username</label>
-    <input type="text" name="username" required>
-    <div id="un"></div>
-    <label for="email">Email</label>
-    <input type="text" name="email" required />
-    <div id="em"></div>
-    <label for="password">Password</label>
-    <input type="password" name="password" required />
-    <div id="pass"></div>
-    <button>Log In</button>
-</form>
+<div class="suli" id="loginform">
+  <form class="suliform message is-link">
+    <div class="message-header">
+      <p>Log In</p>
+    </div>
+    <div class="message-body">
+      <div class="field">
+        <label class="label" for="username">Username</label>
+        <div class="control">
+          <input
+            class="input is-medium is-focused"
+            type="text"
+            name="username"
+            required />
+        </div>
+        <div id="un"></div>
+      </div>
+
+      <div class="field">
+        <label class="label" for="password">Password</label>
+        <input
+          class="input is-medium is-focused"
+          type="password"
+          name="password"
+          required />
+      </div>
+      <div id="pass"></div>
+      <button class="button is-link">Log In</button>
+    </div>
+  </form>
+</div>
 
 <script>
-const form = document.querySelector('form');
-const usernameError = document.getElementById('un');
-const emailError = document.getElementById('em');
-const passwordError = document.getElementById('pass');
+  const form = document.querySelector("form");
+  const usernameError = document.getElementById("un");
+  const passwordError = document.getElementById("pass");
 
-form.addEventListener('submit', async (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-
     const username = form.username.value;
-    const email = form.email.value;
     const password = form.password.value;
-    
-    try {
-          const res = await fetch('/login', {
-            method: 'POST',
-            body: JSON.stringify({ username, email, password }),
-            headers: { 'Content-Type': 'application/json' }
-          });
-          const data = await res.json();
-          console.log(data);
-          if (data.errors) {
-            usernameError.textContent = data.errors.username;
-            emailError.textContent = data.errors.email;
-            passwordError.textContent = data.errors.password;
-            console.log(usernameError.textContent);
-          }
-          if (data.user) {
-            location.assign('/');
-          }  
-        } catch (error) {
-            console.log(error);
-        }
-});
 
+    try {
+      const res = await fetch("/login", {
+        method: "POST",
+        body: JSON.stringify({ username, password }),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.errors) {
+        usernameError.textContent = data.errors.username;
+        passwordError.textContent = data.errors.password;
+      }
+      if (data.user) {
+        location.assign("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
 </script>
 
 <%- include('partials/footer'); -%>
