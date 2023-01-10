@@ -53,7 +53,7 @@
 <img src="booksite-app/public/images/readit-home.png" alt="readit-home.png" >
 </br>
 <h3>Login<h3>
-<img src="booksite-app/public/images/readit-login.png" alt="readit-login.png" >
+<img src="https://github.com/brittaniejose/backend-project/blob/main/public/images/readit-login.png?raw=true" alt="readit-login.png" style="width: 400px, height: 400px" >
 </br>
 <h3>Browse Genres<h3>
 <img src="booksite-app/public/images/readit-genre.png" alt="readit-genre.png" >
