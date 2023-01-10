@@ -1,26 +1,102 @@
 <%- include('partials/header'); -%>
 
-<div class="bookcards">
-  <% if (books) { %> <% books.forEach(function(book){ %>
-  <div class="card">
-    <div class="card-header">
-      <p class="title is-5"><%= book.title %></p>
-      <p class="subtitle is-6"><%= book.author %></p>
-    </div>
-
-    <div class="card-image">
-      <img src="/images/<%= book.cover %>" />
-    </div>
-    <div class="card-content">
-      <p><strong>Genre:</strong> <%= book.genre[0] %>, <%=book.genre[1] %></p>
-      <p><strong>Rating:</strong> <%= book.rating %></p>
-      <br />
-      <p><a href="/genre/<%= book.genre[0] %>/<%= book._id %>">More Info</a></p>
-    </div>
+<div class="bookcards columns" id="bookCards">
+  <div class="column is-full page-title">
+    <div class="title">Search Result for: <%= searchInput %></div>
+    <nav class="navbar-divider"></nav>
   </div>
+  <% if (books) { %> <% books.forEach(function(book){ %>
+    <div class="column is-4 cardDiv">
+      <div class="card" style="max-width: 325px;">
+        <div class="card-header">
+          <p class="title is-5"><%= book.title %></p>
+          <p class="subtitle is-6"><%= book.author %></p>
+        </div>
+    
+        <div class="card-image">
+          <img src="/images/<%= book.cover %>" style="min-width: 325px;"/>
+        </div>
+        <div class="card-content">
+          <p><strong>Genre:</strong> <%= book.genre[0] %>, <%=book.genre[1] %></p>
+          <p><strong>Rating:</strong> <%= book.rating %></p>
+          <br />
+          <div class="bookActions">
+            <p><a href="/genre/<%= book.genre[0] %>/<%= book._id %>">More Info</a></p>
+            <form class="favorites-form">
+              <input type="hidden" name="bookID" value="<%= book.id %>">
+              <input type="hidden" name="bookTitle" value="<%= book.title %>">
+              <button type="submit" class="button is-link is-small is-rounded">Add to Favorites</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   <% }); %> <%} else { %>
   <p>No books found</p>
   <% } %>
 </div>
+
+<script>
+
+const bookCardDiv = document.getElementById('bookCards')
+const singleCardDiv = document.querySelectorAll('.cardDiv')
+
+function setClass() {
+  if (window.innerWidth < 1023) {
+    bookCardDiv.classList.add('is-mobile');
+    singleCardDiv.forEach(div => {
+      div.classList.remove('column');
+      div.classList.remove('is-4');
+      div.style.marginBottom = "30px"
+    })
+  } else {
+    bookCardDiv.classList.remove('is-mobile');
+    singleCardDiv.forEach(div => {
+      div.classList.add('column');
+      div.classList.add('is-4');
+    })
+  }
+}
+
+setClass();
+
+window.addEventListener('resize', setClass);
+
+  function generateFormIds(forms) {
+    let counter = 1;
+    forms.forEach(form => {
+      form.setAttribute('id', `form-${counter}`);
+      counter++;
+    });
+  }
+
+  const forms = document.querySelectorAll('form');
+  generateFormIds(forms);
+
+  forms.forEach(form => {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formId = this.getAttribute('id');
+      console.log(`${formId} was selected`);
+
+      const bookTitleInput = document.querySelector(`form#${formId} input[name="bookTitle"`);
+      const bookIDInput = document.querySelector(`form#${formId} input[name="bookID"`);
+
+      const bookTitle = bookTitleInput.value;
+      const bookID = bookIDInput.value;
+        
+      const res = await fetch("/favorites", {
+        method: "POST",
+        body: JSON.stringify({ bookID, bookTitle }),
+        headers: { "Content-Type": "application/json" },
+      });
+      const response = await res.json();
+    
+      if (response.message) {
+        alert(response.message)
+      }
+    });
+  });
+</script>
 
 <%- include('partials/footer'); -%>

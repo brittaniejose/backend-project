@@ -8,10 +8,14 @@ const jwt = require("jsonwebtoken");
 
 // Book Routes
 
-const cookieValidator = function (req, res, next) {
+const cookieValidator = async function (req, res, next) {
   console.log("auth middleware fired");
   if (req.cookies.jwt) {
-    req.user = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET);
+    const currentUser = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET);
+
+    const user = await User.findOne({_id: currentUser.id})
+    console.log(`${user.username} is browsing`)
+    req.user = user;
     next();
   } else {
     res.redirect("/login");
@@ -27,7 +31,7 @@ router.get("/genre/:genre", cookieValidator, (req, res) => {
     { genre: genre },
     "title author published cover genre rating",
     function (err, books) {
-      res.render("genreTemplate", { books, user });
+      res.render("genreTemplate", { books, user, genre });
     }
   );
 });
@@ -48,8 +52,7 @@ router.get("/genre/:genre/:bookID", cookieValidator, (req, res) => {
 router.get("/search", cookieValidator, (req, res) => {
   // search db to return books that match search value
 
-  const title = req.query.search;
-  const author = req.query.search;
+  let searchInput = req.query.search;
   let regex = new RegExp(req.query.search, "i");
   console.log(regex);
 
@@ -62,7 +65,9 @@ router.get("/search", cookieValidator, (req, res) => {
       if (err) {
         res.send(err);
       }
-      res.render("searchTemplate", { books, user });
+      const firstLetterUpper = /(\b[a-z](?!\s))/g;
+      searchInput = searchInput.replace(firstLetterUpper, function(x){return x.toUpperCase();})
+      res.render("searchTemplate", { books, user, searchInput });
     }
   );
 });
@@ -80,27 +85,18 @@ router.get("/add-review/:genre/:bookID", cookieValidator, (req, res) => {
   );
 });
 
-router.post("/add-review/:genre/:bookID", cookieValidator, (req, res) => {
+router.post("/add-review/:genre/:bookID", cookieValidator, async (req, res) => {
   console.log("add review post");
   let { genre, bookID } = req.params;
   let { content } = req.body;
+  let postedAt = new Date().toLocaleString("en-US")
 
-  const desiredBook = Book.findOne({ _id: bookID });
+  const desiredBook = await Book.findOne({ _id: bookID });
   const userId = req.user.id;
   console.log(userId, "userID ln 96");
   if (desiredBook) {
-    Review.create(
-      { book: bookID, author: userId, content },
-      function (err, review) {
-        if (err) {
-          console.log(err);
-          res.send("there was an error " + err);
-        } else {
-          console.log("review created successfully");
-          res.redirect(302, `/genre/${genre}/${bookID}`);
-        }
-      }
-    );
+      const review = await Review.create({ book: bookID, author: userId, content, postedAt });
+      res.redirect(302, `/genre/${genre}/${bookID}`);
   }
 });
 
@@ -144,11 +140,13 @@ router.get("/review-edit/:genre/:bookID/:reviewID", cookieValidator, (req, res) 
 
 router.post("/review-edit/:genre/:bookID/:reviewID", cookieValidator, (req, res) => {
   let { genre, bookID, reviewID } = req.params;
+  let postedAt = new Date().toLocaleString("en-US")
   let newContent = req.body;
 
   Review.updateOne(
     { _id: reviewID },
     { content: newContent.content },
+    { postedAt },
     function (err, review) {
       if (err) {
         console.log(req.body);
@@ -163,7 +161,7 @@ router.post("/review-edit/:genre/:bookID/:reviewID", cookieValidator, (req, res)
 });
 
 router.get("/join-club", cookieValidator, (req, res) => {
-  const user = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET);
+  const user = req.user;
   res.render("join-club", { user });
 });
 
@@ -196,6 +194,57 @@ router.post("/join-club", cookieValidator, async (req, res) => {
     console.log(error);
     const errors = joinClubErrors(error);
     res.status(400).json({ errors });
+  }
+});
+
+router.get("/favorites", cookieValidator, async (req, res) => {
+  const user = req.user;
+  try {
+    const userID = req.user.id;
+    const aUser = await User.findById(userID).populate('favorites');
+    const favorites = aUser.favorites;
+    res.render('favoritesTemplate', { favorites, user });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({message: "There was an error retrieving your favorites list"});
+  }
+})
+
+router.post("/favorites", cookieValidator, async (req, res) => {
+  let { bookID, bookTitle } = req.body;
+
+  console.log(req.body, 'req body favorites')
+
+  const userID = req.user.id;
+
+  try {
+    const user = await User.findById(userID).populate('favorites').exec();
+
+    const inFavorites = user.favorites.some(favorite => favorite.id === bookID);
+    if (inFavorites) {
+      res.json({message: `${bookTitle} is already saved to your favorites`})
+    } else {
+      user.favorites.push(bookID);
+      await user.save();
+      res.status(201).json({message: `${bookTitle} has been added to favorites`});
+    }
+  } catch (err) {
+    res.json({message: `There was an error adding ${bookTitle} to your favorites`})
+  }
+});
+
+router.post("/delete-favorite", cookieValidator, async (req, res) => {
+  console.log("delete favorite fired")
+  let { bookID } = req.body;
+  console.log(req.body, 'req body favorite')
+
+  try {
+    const userID = req.user.id;
+    await User.findByIdAndUpdate(userID, { $pull: { favorites: bookID } })
+    res.status(201).json({message: "book removed from favorites"})
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({message: 'There was an error removing the book from favorites'});
   }
 });
 

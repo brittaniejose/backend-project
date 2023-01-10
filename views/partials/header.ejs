@@ -36,6 +36,9 @@
           </div>
         </div>
         <a class="navbar-item" href="/join-club"> Join Club </a>
+        <% if (user) { %>
+        <a class="navbar-item" href="/favorites">Favorites</a>
+        <% } %>
       </div>
 
       <div class="userDiv">
@@ -44,11 +47,26 @@
           ><strong>Welcome <%= user.username %></strong></span
         >
         <a class="navbar-item" href="/logout">Log Out</a>
+        <form id="search" action="/search" method="GET">
+          <div class="field">
+            <p class="control has-icons-left">
+              <input
+                name="search"
+                type="text"
+                class="input is-small is-normal is-rounded"
+                placeholder="Search title or author" 
+                />
+                <span class="icon is-small is-left has-text-success">
+                  <i class="fas fa-search"></i>
+                </span>
+            </p>
+          </div>
+        </form>
         <% } else { %>
-        <a class="navbar-item" href="/login">Login</a>
-        <a class="navbar-item" href="/signup">Sign Up</a>
+          <a class="navbar-item" href="/login">Login</a>
+          <a class="navbar-item" href="/signup">Sign Up</a>
         <% } %>
       </div>
     </nav>
-  </body>
+
 </html>
