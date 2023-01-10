@@ -6,18 +6,14 @@ const jwt = require("jsonwebtoken");
 
 /* GET home page. */
 
-router.get("/", function (req, res) {
+router.get("/", async function (req, res) {
   console.log("index route");
 
-  // let books = Book.find({ rating: {$gt: 7 }}, "title cover genre rating").sort({ rating: -1 }).limit(3)
-
-  // console.log(books)
-
   if (req.cookies.jwt) {
-    const user = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET);
-    console.log(user);
-
-    res.render("index", { title: "ReadIt", user });
+    const currentUser = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET);
+    const user = await User.findOne({_id: currentUser.id})
+    console.log(`${user.username} is browsing`)
+    res.render("index", { title: "ReadIt", user: user });
   } else {
     res.render("index", { title: "ReadIt", user: false });
   }

@@ -61,9 +61,9 @@ module.exports.signup_post = async (req, res) => {
 
   try {
       const newUser = await User.create({ username, email, password });
-      const token = createToken(newUser._id);
+      const token = createToken(newUser._id, newUser.username);
       res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-      res.status(201).json({ user: newUser._id });
+      res.status(201).json({ user: newUser });
     }
 
   catch (error) {
@@ -75,12 +75,7 @@ module.exports.signup_post = async (req, res) => {
   };
 
 module.exports.login_get = (req, res) => {
-  if (req.cookies.jwt) {
-    const user = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET);
-    res.render("login", { user });
-  } else {
-    res.render("login", { user: false });
-  }
+  res.render("login", { user: false });
 };
 
 module.exports.login_post = async (req, res) => {
@@ -92,7 +87,7 @@ module.exports.login_post = async (req, res) => {
     console.log("user logged in");
     const token = createToken(existingUser._id, existingUser.username);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(201).json({ user: existingUser._id });
+    res.status(201).json({ user: existingUser });
   } catch (error) {
     console.log('catch block fired for login error ln 108');
     const errors = loginErrors(error);

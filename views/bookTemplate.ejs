@@ -12,11 +12,18 @@
             <img src="/images/<%= book.cover %>">
             <div>
               <div>
-                <strong>Genre: <a href="/genre/<%= book.genre[0] %>"><%= book.genre[0] %></a>
-                  <a href="/genre/<%= book.genre[1] %>"><% if (book.genre.length > 1) { %>, <%= book.genre[1] %> <% } %></a></strong>
+                <strong>Genre: <a href="/genre/<%= book.genre[0] %>"><%= book.genre[0] %><% if (book.genre.length > 1) { %>,</a>
+                  <a href="/genre/<%= book.genre[1] %>"><%= book.genre[1] %> <% } %></a></strong>
                 <p><strong>Rating:</strong> <%= book.rating %></p>
               </div>
               <p><strong>Description:</strong> <%= book.desc %></p>
+              <div class="bookActions">
+                <form id="favorites-form">
+                  <input type="hidden" name="bookID" value="<%= book.id %>">
+                  <input type="hidden" name="bookTitle" value="<%= book.title %>">
+                  <button type="submit" class="button is-link is-small is-rounded">Add to Favorites</button>
+                </form>
+              </div>
             </div>
           </div>
       </div>
@@ -25,11 +32,11 @@
   <div class="card">
     <p class="title is-5" id="reviewsLabel">Reviews</p>
     <nav class="navbar-divider"></nav>
+    <% if (reviews.length > 0) { %>
     <div class="card-content">
-      <% if (reviews) { %>
       <% reviews.forEach(function(review) { %>
-     <p><%= review.content %></p>
-     <strong><p>Posted by: <% if (user.username === review.author.username) { %>You <%} else { %><%= review.author.username %><% } %></p></strong>
+     <p style="margin-bottom: 5px"><%= review.content %></p>
+     <strong><p>Posted by: <% if (user.username === review.author.username) { %>You <%} else { %><%= review.author.username %><% } %> on <%= review.postedAt %></p></strong>
       
      <% if (user.username === review.author.username) { %> 
       
@@ -41,18 +48,61 @@
       <nav class="navbar-divider"></nav>
       <%}); %>
       
-      <%} else { %>
-        <p>This book has not been reviewed yet</p>
-      <% } %>
     </div>
+    <%} %>
+    <% if (reviews.length === 0) { %>
+    <div class="card-content">
+      <p>This book has not been reviewed yet.</p>
+    </div>
+    <% } %>
   </div>
 
   <br>
-  <button class="button is-primary is-rounded" onClick="location.href='/add-review/<%= book.genre[0] %>/<%= book._id %>'">Add Review</button>
+  <button class="button is-primary is-rounded addRevBtn" onClick="location.href='/add-review/<%= book.genre[0] %>/<%= book._id %>'">Add Review</button>
 
   <%} else { %>
   <p>No book found</p>
   <% } %>
 </div>
+
+<script>
+  const addReviewBtn = document.getElementsByClassName('addRevBtn')
+
+  function setStyle() {
+  if (window.innerWidth < 1023) {
+    addReviewBtn[0].style.marginLeft = "60px"
+
+  }
+}
+
+setStyle();
+
+window.addEventListener('resize', setStyle);
+
+
+  const form = document.getElementById('favorites-form');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const bookTitleInput = document.querySelector('input[name="bookTitle"');
+      const bookIDInput = document.querySelector('input[name="bookID');
+
+      const bookTitle = bookTitleInput.value;
+      const bookID = bookIDInput.value;
+        
+      const res = await fetch("/favorites", {
+        method: "POST",
+        body: JSON.stringify({ bookID, bookTitle }),
+        headers: { "Content-Type": "application/json" },
+      });
+      const response = await res.json();
+    
+      if (response.message) {
+        alert(response.message)
+      }
+    });
+
+</script>
 
 <%- include('partials/footer'); -%>

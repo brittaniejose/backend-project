@@ -2,40 +2,37 @@
 
 <div class="bookcards columns" id="bookCards">
   <div class="column is-full page-title">
-    <div class="title"><%= genre %> Books</div>
+    <div class="title">Your Favorites</div>
     <nav class="navbar-divider"></nav>
   </div>
-  <% if (books) { %> 
-  <% books.forEach(function(book){ %>
-  <div class="column is-4 cardDiv">
-    <div class="card" style="max-width: 325px;">
-      <div class="card-header">
-        <p class="title is-5 book-title"><%= book.title %></p>
-        <p class="subtitle is-6"><%= book.author %></p>
-      </div>
-  
-      <div class="card-image">
-        <img src="/images/<%= book.cover %>" style="min-width: 325px;" />
-      </div>
-      <div class="card-content">
-        <p>Genre: <%= book.genre[0] %><% if (book.genre.length > 1) { %>, <%= book.genre[1] %> <% } %></p>
-        <p>Rating: <%= book.rating %></p>
-        <br />
-        <div class="bookActions">
-          <p><a href="/genre/<%= book.genre[0] %>/<%= book._id %>">More Info</a></p>
-          <form class="favorites-form">
-            <input type="hidden" name="bookID" value="<%= book.id %>">
-            <input type="hidden" name="bookTitle" value="<%= book.title %>">
-            <button type="submit" class="button is-link is-small is-rounded">Add to Favorites</button>
-          </form>
+  <% if (favorites.length > 0) { %> <% favorites.forEach(function(favorite){ %>
+    <div class="column is-4 cardDiv">
+      <div class="card" style="max-width: 325px;">
+        <div class="card-header">
+          <p class="title is-5"><%= favorite.title %></p>
+          <p class="subtitle is-6"><%= favorite.author %></p>
+        </div>
+    
+        <div class="card-image">
+          <img src="/images/<%= favorite.cover %>" style="min-width: 325px;"/>
+        </div>
+        <div class="card-content">
+          <p><strong>Genre:</strong> <%= favorite.genre[0] %>, <%=favorite.genre[1] %></p>
+          <p><strong>Rating:</strong> <%= favorite.rating %></p>
+          <br />
+          <div class="bookActions">
+            <p><a href="/genre/<%= favorite.genre[0] %>/<%= favorite._id %>">More Info</a></p>
+            <form class="favorites-form">
+              <input type="hidden" name="bookID" value="<%= favorite.id %>">
+              <input type="hidden" name="bookTitle" value="<%= favorite.title %>">
+              <button type="submit" class="button is-danger is-small is-rounded">Remove From Favorites</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-
-  </div>
-  <% }); %> 
-  <%} else { %>
-  <p>No books found</p>
+  <% }); %> <%} else { %>
+  <p id="no-favorites">You have no books saved to favorites yet.</p>
   <% } %>
 </div>
 
@@ -88,18 +85,23 @@ window.addEventListener('resize', setClass);
       const bookTitle = bookTitleInput.value;
       const bookID = bookIDInput.value;
         
-      const res = await fetch("/favorites", {
+      const res = await fetch("/delete-favorite", {
         method: "POST",
-        body: JSON.stringify({ bookID, bookTitle }),
+        body: JSON.stringify({ bookID }),
         headers: { "Content-Type": "application/json" },
       });
       const response = await res.json();
     
-      if (response.message) {
-        alert(response.message)
+      if (response.message === "book removed from favorites") {
+        alert(`${bookTitle} was removed from favorites`)
+        location.assign("/favorites")
+      } else {
+        alert(`Unable to remove ${bookTitle} from favorites. Please try again later.`)
       }
     });
   });
+
+
 </script>
 
 <%- include('partials/footer'); -%>

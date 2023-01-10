@@ -1,6 +1,6 @@
 <h1>ReadIt<h1>
 
-<img src="/images/ReadIt.png">
+<img src="booksite-app/public/images/ReadIt.png">
 
 <h2><u>Overview:</u><h2>
 
@@ -48,15 +48,23 @@
 </br>
 
 <h2>Screenshots:</h2>
-<img src="resources/images/landingpage.png" alt="Landing Page with star filled night">
-<h4>Highlights the landing page of myPhotoAtlas</h4>
 <br />
-<img src="resources/images/searchresult.png" alt="displaying search result of NYC and pictures">
-<h4>Photo result after Searching New York City</h4>
-<br />
-<img src="resources/images/myPages.png" alt="myPages screenshot">
-<h4>Displays how myPlaces is layed out</h4>
-<br />
-<img src="resources/images/About.png" alt="About Landing Page">
-<h4>Showcases our About section and the methods we used in creating myPhotoAtlas</h4>
+<h3>Home Page</h3>
+<img src="booksite-app/public/images/readit-home.png" alt="readit-home.png" >
+</br>
+<h3>Login<h3>
+<img src="booksite-app/public/images/readit-login.png" alt="readit-login.png" >
+</br>
+<h3>Browse Genres<h3>
+<img src="booksite-app/public/images/readit-genre.png" alt="readit-genre.png" >
+</br>
+<h3>See Book Info and Reviews<h3>
+<img src="booksite-app/public/images/readit-bookinfo.png" alt="readit-bookinfo.png" >
+</br>
+<h3>Add Favorites<h3>
+<img src="booksite-app/public/images/readit-favorites.png" alt="readit-favorites.png" >
+
+
+
+
        

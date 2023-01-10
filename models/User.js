@@ -25,6 +25,7 @@ const userSchema = new Schema({
     minlength: [6, "Minimum password length is 6 characters"],
   },
   reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }],
+  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book', unique: true }]
 });
 
 userSchema.pre("save", async function(next) {
@@ -44,6 +45,7 @@ userSchema.statics.login = async function(username, password) {
   }
   throw Error('incorrect username')
 }
+
 
 const User = mongoose.model("User", userSchema);
 
