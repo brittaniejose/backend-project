@@ -1,6 +1,6 @@
 <h1>ReadIt<h1>
 
-<img src="booksite-app/public/images/ReadIt.png">
+<img src="https://github.com/brittaniejose/backend-project/blob/main/public/images/ReadIt.png?raw=true" alt="readit.png">
 
 <h2><u>Overview:</u><h2>
 
@@ -50,19 +50,19 @@
 <h2>Screenshots:</h2>
 <br />
 <h3>Home Page</h3>
-<img src="booksite-app/public/images/readit-home.png" alt="readit-home.png" >
+<img src="https://github.com/brittaniejose/backend-project/blob/main/public/images/readit-home.png?raw=true" alt="readit-home.png" style="width: 200px, height: 200px">
 </br>
 <h3>Login<h3>
-<img src="https://github.com/brittaniejose/backend-project/blob/main/public/images/readit-login.png?raw=true" alt="readit-login.png" style="width: 400px, height: 400px" >
+<img src="https://github.com/brittaniejose/backend-project/blob/main/public/images/readit-login.png?raw=true" alt="readit-login.png" style="width: 200px, height: 200px">
 </br>
 <h3>Browse Genres<h3>
-<img src="booksite-app/public/images/readit-genre.png" alt="readit-genre.png" >
+<img src="https://github.com/brittaniejose/backend-project/blob/main/public/images/readit-genre.png?raw=true" alt="readit-genre.png" style="width: 200px, height: 200px">
 </br>
 <h3>See Book Info and Reviews<h3>
-<img src="booksite-app/public/images/readit-bookinfo.png" alt="readit-bookinfo.png" >
+<img src="https://github.com/brittaniejose/backend-project/blob/main/public/images/readit-bookinfo.png?raw=true" alt="readit-bookinfo.png" style="width: 200px, height: 200px">
 </br>
 <h3>Add Favorites<h3>
-<img src="booksite-app/public/images/readit-favorites.png" alt="readit-favorites.png" >
+<img src="https://github.com/brittaniejose/backend-project/blob/main/public/images/readit-favorites.png?raw=true" alt="readit-favorites.png" style="width: 200px, height: 200px">
 
 
 
