@@ -50,19 +50,19 @@
 <h2>Screenshots:</h2>
 <br />
 <h3>Home Page</h3>
-<img src="https://github.com/brittaniejose/backend-project/blob/main/public/images/readit-home.png?raw=true" alt="readit-home.png" style="width: 200px, height: 200px">
+<img src="https://github.com/brittaniejose/backend-project/blob/main/public/images/readit-home.png?raw=true" alt="readit-home.png" width=400 height=400>
 </br>
 <h3>Login<h3>
-<img src="https://github.com/brittaniejose/backend-project/blob/main/public/images/readit-login.png?raw=true" alt="readit-login.png" style="width: 200px, height: 200px">
+<img src="https://github.com/brittaniejose/backend-project/blob/main/public/images/readit-login.png?raw=true" alt="readit-login.png" width=400 height=400>
 </br>
 <h3>Browse Genres<h3>
-<img src="https://github.com/brittaniejose/backend-project/blob/main/public/images/readit-genre.png?raw=true" alt="readit-genre.png" style="width: 200px, height: 200px">
+<img src="https://github.com/brittaniejose/backend-project/blob/main/public/images/readit-genre.png?raw=true" alt="readit-genre.png" width=400 height=400>
 </br>
 <h3>See Book Info and Reviews<h3>
-<img src="https://github.com/brittaniejose/backend-project/blob/main/public/images/readit-bookinfo.png?raw=true" alt="readit-bookinfo.png" style="width: 200px, height: 200px">
+<img src="https://github.com/brittaniejose/backend-project/blob/main/public/images/readit-bookinfo.png?raw=true" alt="readit-bookinfo.png" width=400 height=400>
 </br>
 <h3>Add Favorites<h3>
-<img src="https://github.com/brittaniejose/backend-project/blob/main/public/images/readit-favorites.png?raw=true" alt="readit-favorites.png" style="width: 200px, height: 200px">
+<img src="https://github.com/brittaniejose/backend-project/blob/main/public/images/readit-favorites.png?raw=true" alt="readit-favorites.png" width=400 height=400>
 
 
 
