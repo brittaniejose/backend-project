@@ -4,7 +4,7 @@
 
 <h2><u>Overview:</u><h2>
 
-<h4>ReadIt is an application that allows book enjoyers to search and browse books to read next, save their favorite books, and review books to aid others in their decision for their next read. Users are also provided the opportunity to join the app's exclusive online book club hosted on a discord server. In the future I would like to add a User Profile feature where users can update their info, view saved books, and view their reviews for all books from a central profile. I would also like to incorporate an API that would expand the user's search experience to thousands or millions of books, while allowing club members the exclusive ability to review books that have been read on the book club's roster.</h4>
+<h4>ReadIt is an application that allows book enjoyers to search and browse books to read next, save their favorite books, and review books to aid others in their decision for their next read. Users are also provided the opportunity to join the app's exclusive online book club hosted on a discord server. In the future I would like to add a User Profile feature where users can update their info, view saved books, and view their reviews for all books from a central location. I would also like to incorporate an API that would expand the user's search experience to thousands or millions of books, while allowing club members the exclusive ability to review books that have been read on the book club's roster.</h4>
 
 </br>
 </br>
