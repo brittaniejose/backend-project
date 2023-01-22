@@ -1,3 +1,6 @@
+if(process.env.NODE_ENV !== 'production'){
+  require ('dotenv').config()
+}
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -8,11 +11,6 @@ const indexRouter = require('./routes/index');
 const authRoutes = require('./routes/authRoutes');
 const bookRoutes = require('./routes/bookRoutes');
 
-
-
-
-// env variable
-require('dotenv').config()
 
 var app = express();
 
