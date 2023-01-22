@@ -39,9 +39,9 @@ function loginErrors(error) {
       } else if (error.message === 'incorrect password') {
         errors.password = 'Password is incorrect'
       } else {
-        errors.server = error;
+        errors.server = error.message;
       }
-      
+
     return errors
 }
 
