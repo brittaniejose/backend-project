@@ -13,7 +13,7 @@ const bookRoutes = require('./routes/bookRoutes');
 
 
 var app = express();
-// require ('dotenv').config()
+require ('dotenv').config()
 // db connection
 const dbURI = process.env.MONGO_DB;
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -50,6 +50,11 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+const port = process.env.PORT || 3021
+app.listen(port, () => {
+    console.log(`Listening on port ${port}`)
+})
 
 module.exports = app;
 
