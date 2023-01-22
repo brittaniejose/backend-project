@@ -32,16 +32,16 @@ function signupErrors (error) {
 };
 
 function loginErrors(error) {
-  let errors = { username: '', password: ''}
+  let errors = { username: '', password: '', server: ''}
       // incorrect email error
       if (error.message === 'incorrect username') {
         errors.username = 'This username is not registered'
-    }
-
-    // incorrect password error
-    if (error.message === 'incorrect password') {
+      } else if (error.message === 'incorrect password') {
         errors.password = 'Password is incorrect'
-    }
+      } else {
+        errors.server = error;
+      }
+      
     return errors
 }
 
